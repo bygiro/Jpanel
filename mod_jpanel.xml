@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="module" version="1.6" client="site" method="upgrade">
+	<name>Jpanel</name>
+	<author>Girolamo Tomaselli</author>
+	<creationDate>10 october 2012</creationDate>
+	<copyright>2012 - Girolamo Tomaselli</copyright>
+	<authorEmail>girotomaselli@gmail.com</authorEmail>
+	<authorUrl>http://bygiro.com</authorUrl>
+	<version>0.5</version>
+	<license>GPLv2 or later</license>
+	<description>
+	<![CDATA[
+		A module that allows other modules or an article to be loaded in a panel slider to the border of the page.
+		example to use:<br /><br />
+		1) assign the module jpanel to any position<br />
+		2) set the custom position from where to get the modules to show (type it): "myjpanel_position"<br />
+		3) set all the other options needed, including the menu items where the jpanel should show up.<br />
+		4) go to the details of the modules you wanna show inside the jpanel slider.<br />
+		5) assign their position to: "myjpanel_position"<br /><br />
+<p>
+<a style="padding: 5px; font-weight: bold; background-color: green; color: white;" target="_blank" alt="PayPal - The safer, easier way to pay online!" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=girotomaselli@hotmail.it&lc=US&item_name=mod_jpanel&currency_code=EUR&bn=PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
+Make a Donation
+</a></p>
+<p>Help us to improve mod_jpanel and develop many more great joomla extensions!<br /> thank you.</p>
+	]]>
+	</description>
+	
+	<files>
+		<filename>mod_jpanel.xml</filename>
+		<filename module="mod_jpanel">mod_jpanel.php</filename>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<filename>license.txt</filename>
+		<folder>tmpl</folder>
+		<folder>assets</folder>
+		<folder>fields</folder>
+		<folder>language</folder>
+	</files>
+	<languages folder="site/administrator/language/">
+    	<language tag="en-GB">language/en-GB/en-GB.mod_jpanel.ini</language>
+  	</languages>
+
+	
+	<config>				
+		<fields name="params" addfieldpath="/administrator/components/com_content/models/fields">
+			<fieldset name="basic">
+				<field name="modOrArt" type="radio" default="0" label="Output an article or modules?" description="">
+					<option value="0">Modules</option>
+					<option value="1">Article</option>
+				</field>
+				<field name="trigger" type="radio" default="hover" label="Trigger" description="How should it open/close? on mouse click or on mouse over?">
+					<option value="hover">On mouse over</option>
+					<option value="click">On click</option>
+				</field>
+				<field name="side" type="radio" default="right" label="Which side?" description="On which side do you wanna show it?">
+					<option value="top">Top</option>
+					<option value="bottom">Bottom</option>
+					<option value="left">Left</option>
+					<option value="right">Right</option>
+				</field>
+				<field name="buttonType" type="radio" default="txt" label="Button Type" description="Choose what type of button you want.">
+					<option value="txt">Text</option>
+					<option value="img">Image</option>
+					<option value="html">HTML</option>
+					<option value="nothing">Nothing (YES! nothing! just empty space!)</option>
+				</field>				
+				<field name="buttonText" type="text" default="Open" description="If 'Text' is selected as button type, this will be the text used" label="Text for Button"/>
+				<field name="buttonTextColor" type="colorpicker"
+					description="Choose the color for the text in the button"
+					label="Button text Color"
+					default="#ffffff"
+				addfieldpath="/modules/mod_jpanel/fields" />
+
+				<field name="buttonImg" type="media"
+					label="Button Image" description="If 'Image' is selected as button type, this will be used." />
+								
+				<field name="buttonColor" type="colorpicker"
+					description="Choose the color for the button"
+					label="Button Color"
+					default="#333333"
+				addfieldpath="/modules/mod_jpanel/fields" />
+				
+				<field name="setHeight" type="text" default="300" label="Set a specific height(only px)" description="the height of the content container"/>
+				<field name="setWidth" type="text" default="200" label="Set a specific width(only px)" description="the width of the content container"/>
+		
+				<field name="bckColor" type="colorpicker"
+					description="Choose the background color for the container"
+					label="Container background color"
+					default="#eeeeee"
+				addfieldpath="/modules/mod_jpanel/fields" />
+				
+				<field name="distance" type="text" default="50%" label="Set a specific distance from the top / left" description="The distance from top or the left(it depends where the jpanel is) side in px or %. example: 200px"/>
+				<field type="spacer" name="" hr="true" />
+				<field name="whatMod" type="text" default="myjpanel_position" label="Load modules from what module position?" description="We suggest using a position not currently in your theme, just type anything in."/>
+			<!--	<field name="display" type="radio" default="0" label="how display the items?" description="vertical style or horizontal">
+					<option value="0">vertical</option>
+					<option value="1">horizontal</option>
+				</field>
+			-->
+				<field type="spacer" name="" hr="true" />
+				<field name="whatArt" type="Modal_Article" label="Choose an article" description="Choose an article to display inside the jpanel"/>
+				<field type="spacer" name="" hr="true" />
+				<field name="load_jquery" type="radio" default="0" label="Load jQuery library?" description="If you already have the jquery library loaded by another extension or by joomla itself, you can avoid to load jquery">
+					<option value="1">Yes</option>
+					<option value="0">No</option>
+				</field>
+				<field
+					name="prepare_content"
+					type="radio"
+					label="MOD_CUSTOM_FIELD_PREPARE_CONTENT_LABEL"
+					description="MOD_CUSTOM_FIELD_PREPARE_CONTENT_DESC"
+					default="1">
+					<option
+						value="0">JNo</option>
+					<option
+						value="1">JYes</option>
+				</field>				
+			</fieldset>
+			<fieldset name="ButtonHTML">
+				<field name="buttonHtml" label ="Button Html" type="editor" description="If 'Html' is selected as button type, this will be the button content" width="300" />
+			</fieldset>
+			
+			<fieldset name="advanced">
+				<field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL"
+				description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+				<field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+				description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
+				<field name="backgroundimage" type="media"
+					label="MOD_CUSTOM_FIELD_BACKGROUNDIMAGE_LABEL" description="MOD_BACKGROUNDIMAGE_FIELD_LOGO_DESC" />				
+				<field name="cache" type="list" default="1" label="COM_MODULES_FIELD_CACHING_LABEL"
+				description="COM_MODULES_FIELD_CACHING_DESC">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+				<field name="cache_time" type="text" default="900" 
+				label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+				description="COM_MODULES_FIELD_CACHE_TIME_DESC"/>
+				<field name="cachemode" type="hidden" default="itemid">
+					<option value="itemid"></option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
