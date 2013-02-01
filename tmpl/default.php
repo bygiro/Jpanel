@@ -1,10 +1,10 @@
 <?php
 /**
- * @package		mod_jpanel
+ * @package	mod_jpanel
  * @copyright	Copyright (C) 2012 Girolamo Tomaselli All rights reserved.
- * @email		girotomaselli@gmail.com
- * @website		http://bygiro.com
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @email	girotomaselli@gmail.com
+ * @website	http://bygiro.com
+ * @license	GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 // no direct access
