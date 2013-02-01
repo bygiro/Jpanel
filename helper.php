@@ -51,8 +51,9 @@ class mod_jpanelHelper{
 		if ($params->def('prepare_content', 1))
 		{
 			JPluginHelper::importPlugin('content');
-			$article[introtext] = JHtml::_('content.prepare', $article[introtext]);
-			$article[fulltext] = JHtml::_('content.prepare', $article[fulltext]);
+			$article['introtext'] = JHtml::_('content.prepare', $article['introtext']);
+			$article['fulltext'] = JHtml::_('content.prepare', $article['fulltext']);
+
 		}
 		
 		return $article;
