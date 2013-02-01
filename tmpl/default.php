@@ -39,12 +39,12 @@ defined('_JEXEC') or die;
 		}
 		
 		if($modorart == 1){
-				
-			$itemID = $arts[id];
+							
+			$itemID = $arts['id'];
 			$url = 'index.php?option=com_content&view=article&id='.$itemID;
-			$title = $arts[title];
-			$intro = $arts[introtext];
-			$full = $arts[fulltext];
+			$title = $arts['title'];
+			$intro = $arts['introtext'];
+			$full = $arts['fulltext'];
 			
 			?><div><?php 
 			echo '<h2>'.$title.'</h2>';
