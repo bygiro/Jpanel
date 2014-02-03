@@ -9,6 +9,9 @@
 
 // no direct access
 defined('_JEXEC') or die;
+
+mb_internal_encoding("UTF-8");
+
 //include the class of the syndicate functions only once
 require_once(dirname(__FILE__).'/helper.php');
 
@@ -26,10 +29,10 @@ $trigger = $params->get('trigger');
 $distance = $params->get('distance');
 
 $setHeight = $params->get('setHeight');
-$style = $jpanel_ID ." .jpanelContent{height: ". $setHeight ."px; }";
+$style = $jpanel_ID .",". $jpanel_ID ." .jpanelContent{height: ". $setHeight ."px; }";
 
 $setWidth = $params->get('setWidth');
-$style .= $jpanel_ID ." .jpanelContent{width: ". $setWidth ."px; }";
+$style .= $jpanel_ID .",". $jpanel_ID ." .jpanelContent{width: ". $setWidth ."px; }";
 
 $buttonColor = $params->get('buttonColor');
 $buttonTextColor = $params->get('buttonTextColor');
@@ -43,22 +46,27 @@ if ($display){
 	$style .= "ul.modulelist li{display: inline; }";
 }
 
+$buttonType = $params->get('buttonType', 'nothing');
 $extra = '';
 switch ($side){
 	case 'top';
 		$style .= $jpanel_ID ."{top:". ($setHeight + 1)* -1 ."px; left:". $distance .";}\n";	
 		$style .= $jpanel_ID ." .jpanelHandle{border-radius:0 0 5px 5px;}\n";
 		$buttonText = '<p>'. $params->get('buttonText') .'</p>';
-		$nothing = '<p>&nbsp;&nbsp;</p>';
-		$extra .= '$jp("'. $jpanel_ID .' .jpanelHandle").css("width", $jp("'. $jpanel_ID .' .jpanelHandle p").textWidth() + "px");';
+		$nothing = '<p>&nbsp;&nbsp;&nbsp;</p>';
+		if($buttonType == 'text'){
+			$extra .= 'jQuery("'. $jpanel_ID .' .jpanelHandle").css("width", jQuery("'. $jpanel_ID .' .jpanelHandle p").textWidth() + "px");';
+		}
 	break;
 
 	case 'bottom';
 		$style .= $jpanel_ID ."{bottom:". ($setHeight + 1)* -1 ."px; left:". $distance .";}\n";	
 		$style .= $jpanel_ID ." .jpanelHandle{border-radius:5px 5px 0 0;}\n";
 		$buttonText = '<p>'. $params->get('buttonText').'</p>';
-		$nothing = '<p>&nbsp;&nbsp;</p>';
-		$extra .= '$jp("'. $jpanel_ID .' .jpanelHandle").css("width", $jp("'. $jpanel_ID .' .jpanelHandle p").textWidth() + "px");';
+		$nothing = '<p>&nbsp;&nbsp;&nbsp;</p>';
+		if($buttonType == 'text'){
+			$extra .= 'jQuery("'. $jpanel_ID .' .jpanelHandle").css("width", jQuery("'. $jpanel_ID .' .jpanelHandle p").textWidth() + "px");';
+		}
 	break;
 	
 	case 'left';
@@ -67,7 +75,7 @@ switch ($side){
 		$style .= $jpanel_ID ." .jpanelHandle{border-radius:0 5px 5px 0;}\n";	
 		$style .= $jpanel_ID ." .jpanelHandle, ". $jpanel_ID ." .jpanelContent{float:left;}\n";
 		$buttonText = '<p>'. $helper->verticaltext($params->get('buttonText')) .'</p>';
-		$nothing = '<p>&nbsp;</p><p>&nbsp;</p>';
+		$nothing = '<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>';
 	break;
 		
 	case 'right';
@@ -76,12 +84,11 @@ switch ($side){
 		$style .= $jpanel_ID ." .jpanelHandle{border-radius:5px 0 0 5px;}\n";	
 		$style .= $jpanel_ID ." .jpanelHandle, ". $jpanel_ID ." .jpanelContent{float:right;}\n";
 		$buttonText = '<p>'. $helper->verticaltext($params->get('buttonText')) .'</p>';
-		$nothing = '<p>&nbsp;</p><p>&nbsp;</p>';
+		$nothing = '<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>';
 	break;	
 }
 
 
-$buttonType = $params->get('buttonType');
 $button = '';
 switch ($buttonType){
 	case 'img':
@@ -102,22 +109,15 @@ switch ($buttonType){
 	break;
 }
 $doc->addStyleDeclaration( $style );
-$doc->addScriptDeclaration('$jp.fn.textWidth = function(){
-  var html_org = $jp(this).html();
-  var html_calc = "<span>" + html_org + "</span>";
-  $jp(this).html(html_calc);
-  var width = $jp(this).find("span:first").width();
-  $jp(this).html(html_org);
-  return width;
-};
-');
 
 $doc->addScript(JURI::root(true).'/modules/mod_jpanel/assets/js/jpanel.min.js');
 
 $doc->addScriptDeclaration('
-	$jp(document).ready(function() {
+	jQuery(window).load(function() {
 		'. $extra .'
 		'. $trigger .'Jpanel("'. $jpanel_ID .'");
+		
+		initjPanelHandle("'. $jpanel_ID .'");
 	});
 ');
 

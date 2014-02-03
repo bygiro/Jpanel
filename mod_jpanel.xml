@@ -3,26 +3,29 @@
 	<name>Jpanel</name>
 	<author>Girolamo Tomaselli</author>
 	<creationDate>10 october 2012</creationDate>
-	<copyright>2012 - Girolamo Tomaselli</copyright>
+	<copyright>2014 - Girolamo Tomaselli</copyright>
 	<authorEmail>girotomaselli@gmail.com</authorEmail>
 	<authorUrl>http://bygiro.com</authorUrl>
-	<version>0.5</version>
+	<version>0.8</version>
 	<license>GPLv2 or later</license>
 	<description>
 	<![CDATA[
+	<div style="text-align: left;">
 		A module that allows other modules or an article to be loaded in a panel slider to the border of the page.
 		example to use:<br /><br />
-		1) assign the module jpanel to any position<br />
-		2) set the custom position from where to get the modules to show (type it): "myjpanel_position"<br />
-		3) set all the other options needed, including the menu items where the jpanel should show up.<br />
-		4) go to the details of the modules you wanna show inside the jpanel slider.<br />
-		5) assign their position to: "myjpanel_position"<br /><br />
+		<ol>
+		<li>assign the module jpanel to any position</li>
+		<li>set the custom position from where to get the modules to show (type it): "myjpanel_position"</li>
+		<li>set all the other options needed, including the menu items where the jpanel should show up.</li>
+		<li>go to the details of the modules you wanna show inside the jpanel slider.</li>
+		<li>assign their position to: "myjpanel_position"</li>
+		</ol>
 <p>
 <a style="padding: 5px; font-weight: bold; background-color: green; color: white;" target="_blank" alt="PayPal - The safer, easier way to pay online!" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=girotomaselli@hotmail.it&lc=US&item_name=mod_jpanel&currency_code=EUR&bn=PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
 Make a Donation
 </a></p>
 <p>Help us to improve mod_jpanel and develop many more great joomla extensions!<br /> thank you.</p>
-	]]>
+	</div>]]>
 	</description>
 	
 	<files>
@@ -48,6 +51,8 @@ Make a Donation
 					<option value="0">Modules</option>
 					<option value="1">Article</option>
 				</field>
+				<field name="whatArt" type="Modal_Article" label="Choose an article" description="Choose an article to display inside the jpanel"/>
+
 				<field name="trigger" type="radio" default="hover" label="Trigger" description="How should it open/close? on mouse click or on mouse over?">
 					<option value="hover">On mouse over</option>
 					<option value="click">On click</option>
@@ -73,32 +78,30 @@ Make a Donation
 
 				<field name="buttonImg" type="media"
 					label="Button Image" description="If 'Image' is selected as button type, this will be used." />
-								
+
 				<field name="buttonColor" type="colorpicker"
 					description="Choose the color for the button"
 					label="Button Color"
 					default="#333333"
 				addfieldpath="/modules/mod_jpanel/fields" />
 				
-				<field name="setHeight" type="text" default="300" label="Set a specific height(only px)" description="the height of the content container"/>
-				<field name="setWidth" type="text" default="200" label="Set a specific width(only px)" description="the width of the content container"/>
-		
 				<field name="bckColor" type="colorpicker"
 					description="Choose the background color for the container"
 					label="Container background color"
 					default="#eeeeee"
 				addfieldpath="/modules/mod_jpanel/fields" />
 				
+				<field name="setHeight" type="text" default="300" label="Set a specific height(only px)" description="the height of the content container"/>
+				<field name="setWidth" type="text" default="200" label="Set a specific width(only px)" description="the width of the content container"/>
+				
 				<field name="distance" type="text" default="50%" label="Set a specific distance from the top / left" description="The distance from top or the left(it depends where the jpanel is) side in px or %. example: 200px"/>
-				<field type="spacer" name="" hr="true" />
 				<field name="whatMod" type="text" default="myjpanel_position" label="Load modules from what module position?" description="We suggest using a position not currently in your theme, just type anything in."/>
 			<!--	<field name="display" type="radio" default="0" label="how display the items?" description="vertical style or horizontal">
 					<option value="0">vertical</option>
 					<option value="1">horizontal</option>
 				</field>
 			-->
-				<field type="spacer" name="" hr="true" />
-				<field name="whatArt" type="Modal_Article" label="Choose an article" description="Choose an article to display inside the jpanel"/>
+				<field name="buttonHtml" label ="Button Html" type="editor" filter="RAW" description="If 'Html' is selected as button type, this will be the button content" width="150" />			
 				<field type="spacer" name="" hr="true" />
 				<field name="load_jquery" type="radio" default="0" label="Load jQuery library?" description="If you already have the jquery library loaded by another extension or by joomla itself, you can avoid to load jquery">
 					<option value="1">Yes</option>
@@ -115,9 +118,6 @@ Make a Donation
 					<option
 						value="1">JYes</option>
 				</field>				
-			</fieldset>
-			<fieldset name="ButtonHTML">
-				<field name="buttonHtml" label ="Button Html" type="editor" description="If 'Html' is selected as button type, this will be the button content" width="300" />
 			</fieldset>
 			
 			<fieldset name="advanced">

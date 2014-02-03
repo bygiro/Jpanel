@@ -46,3 +46,7 @@ ul.modulelist {
 #close_jpanel {
 	text-align: center;
 }
+
+.jpanelContainer {
+	position: relative;
+}
