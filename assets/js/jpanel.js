@@ -6,82 +6,89 @@
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-function openJpanel(jpanel_id){
-	var side = jpanel_id.split('_');
+function openJpanel(jpanel_id){	
+	var jPanel = jQuery(jpanel_id),
+		side = jPanel.attr('data-jpanel-side');
 	
-	switch(side[2]){
+	switch(side){
 		case 'right':
-			jQuery(jpanel_id).stop(true, false).animate({
+			jPanel.stop(true, false).animate({
 			   right: '0px'
 			}, 900);	
 		break;
 		
 		case 'left':
-			jQuery(jpanel_id).stop(true, false).animate({
+			jPanel.stop(true, false).animate({
 			   left: '0px'
 			}, 900);	
 		break;
 		
 		case 'top':
-			jQuery(jpanel_id).stop(true, false).animate({
+			jPanel.stop(true, false).animate({
 			   top: '0px'
 			}, 900);	
 		break;
 		
 		case 'bottom':
-			jQuery(jpanel_id).stop(true, false).animate({
+			jPanel.stop(true, false).animate({
 			   bottom: '0px'
 			}, 900);	
 		break;
 	}
 	
-	jQuery(jpanel_id + ' .jpanelHandle').addClass('jpanel_open');
+	jPanel.addClass('jpanel_open');
 }
 
 function closeJpanel(jpanel_id){
-	var side = jpanel_id.split('_');
-	switch(side[2]){
+	var jPanel = jQuery(jpanel_id),
+		jPanel_content = jQuery(jpanel_id + ' .jpanelContent'),
+		side = jPanel.attr('data-jpanel-side');
+		
+	switch(side){
 		case 'right':
-			jQuery(jpanel_id).animate({
-				right:  ((jQuery(jpanel_id + ' .jpanelContent').width() + 11) * -1)+'px'
+			jPanel.animate({
+				right:  ((jPanel_content.width() + 11) * -1)+'px'
 			}, 800);	
 		break;
 		
 		case 'left':
-			jQuery(jpanel_id).animate({
-				left:  ((jQuery(jpanel_id + ' .jpanelContent').width() + 11) * -1)+'px'
+			jPanel.animate({
+				left:  ((jPanel_content.width() + 11) * -1)+'px'
 			}, 800);	
 		break;
 		
 		case 'top':
-		   jQuery(jpanel_id).animate({
-				top: ((jQuery(jpanel_id + ' .jpanelContent').height() + 1) * -1)+'px'
+		   jPanel.animate({
+				top: ((jPanel_content.height() + 1) * -1)+'px'
 			}, 800);	
 		break;
 		
 		case 'bottom':
-		   jQuery(jpanel_id).animate({
-				bottom: ((jQuery(jpanel_id + ' .jpanelContent').height() + 1) * -1)+'px'
+		   jPanel.animate({
+				bottom: ((jPanel_content.height() + 1) * -1)+'px'
 			}, 800);	
 		break;
 	}
 
-	jQuery(jpanel_id + ' .jpanelHandle').removeClass('jpanel_open');	
+	jPanel.removeClass('jpanel_open');	
+}
+
+function toggleJpanel(jpanel_id){
+	if(!jQuery(jpanel_id).hasClass('jpanel_open')){
+		
+		/* open the panel */
+		openJpanel(jpanel_id);
+		
+	} else {
+			
+		/* close the panel */
+		closeJpanel(jpanel_id);
+	}
 }
 
 function clickJpanel(jpanel_id){
-
     jQuery(jpanel_id + ' .jpanelHandle').click(function() {
-		if(!jQuery(jpanel_id + ' .jpanelHandle').hasClass('jpanel_open')){
-			
-			/* open the panel */
-			openJpanel(jpanel_id);
-			
-		} else {
-				
-			/* close the panel */
-			closeJpanel(jpanel_id);
-		}
+		toggleJpanel(jpanel_id);
     });		
 }
 
@@ -103,14 +110,15 @@ function hoverJpanel(jpanel_id){
 }
 
 function initjPanelHandle(jpanel_id){
-		var properties = {},
-			side = jpanel_id.split("_"),
-			handle = jQuery(jpanel_id).find(".jpanelHandle"),
-			handleW = handle.outerWidth(),
-			handleH = handle.outerHeight();
+		var jPanel = jQuery(jpanel_id),
+		side = jPanel.attr('data-jpanel-side'),
+		properties = {},
+		handle = jQuery(jpanel_id).find(".jpanelHandle"),
+		handleW = handle.outerWidth(),
+		handleH = handle.outerHeight();
 			
 		properties.position = "absolute";
-		switch(side[2]){
+		switch(side){
 			case "right":
 				properties.top = "0";
 				properties.left = - (handleW +11) +"px";
@@ -133,8 +141,6 @@ function initjPanelHandle(jpanel_id){
 		}		
 
 		handle.css(properties);
-		
-		console.log(properties);
 }
 
 jQuery.fn.textWidth = function(){

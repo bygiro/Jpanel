@@ -11,8 +11,8 @@
 defined('_JEXEC') or die;
 ?>
 <div class="<?php echo $moduleclass_sfx ?>" <?php if ($params->get('backgroundimage')): ?> style="background-image:url(<?php echo $params->get('backgroundimage');?>)"<?php endif;?> >
-	<div id="sidejPanel_<?php echo $module->id .'_'. $side; ?>" class="jPanel">
-	<?php if ($side == 'bottom'){?>	
+	<div id="jPanel_<?php echo $module->id ; ?>" data-jpanel-side="<?php echo $side; ?>" class="jPanel">
+	<?php if ($side == 'bottom' AND $button != ''){?>	
 		<div style="margin: 0;" class="jpanelHandle"><?php echo $button; ?></div>
 	<?php } ?>
 
@@ -39,7 +39,7 @@ defined('_JEXEC') or die;
 		
 		if($modorart == 1){		
 			$itemID = $arts['id'];
-			$url = 'index.php?option=com_content&view=article&id='.$itemID;
+			$url = JRoute::_('index.php?option=com_content&view=article&id='.$itemID, false);
 			$title = $arts['title'];
 			$intro = $arts['introtext'];
 			$full = $arts['fulltext'];
@@ -48,13 +48,18 @@ defined('_JEXEC') or die;
 			echo '<h2>'.$title.'</h2>';
 			echo $intro;
 			if($full != ''){
-				echo "<a href='.$url.'>Read More</a>";
+				echo '<a href="'. $url .'">'. JText::_("MOD_JPANEL_READ_MORE") .'</a>';
 			}
 			echo '</div>'; 
 		}
 	?>
+	<?php if($params->get('show_bygiro_link',1)){ ?> 
+		<p style="text-align: center; margin: 10px 0 0 0; padding: 0; color: #000000; font-size:8px;">
+		powered <a href="http://bygiro.com">ByGiro.com</a>
+		</p>
+	<?php } ?>
 		</div>
-	<?php if ($side != 'bottom'){?>	
+	<?php if ($side != 'bottom' AND $button != ''){?>	
 		<div style="margin: 0;" class="jpanelHandle"><?php echo $button; ?></div>
 	<?php } ?>
 	</div>

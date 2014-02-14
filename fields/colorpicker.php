@@ -21,7 +21,7 @@ class JFormFieldColorpicker extends JFormField
 	{
 		
 		
-		$class		= ' class="color {hash:true}" ';
+		$class		= ' class="color {hash:true,adjust:false}" ';
 		$scriptname	 = JURI::root().'/modules/mod_jpanel/fields/jscolor.js';
 	
 		$doc = JFactory::getDocument();

@@ -23,7 +23,7 @@ $helper = new mod_jpanelHelper();
 $helper->load_jquery($params); // add jquery
 
 $side = $params->get('side');
-$jpanel_ID = '#sidejPanel_'. $module->id .'_'. $side;
+$jpanel_ID = '#jPanel_'. $module->id;
 $modorart = $params->get('modOrArt');
 $trigger = $params->get('trigger');
 $distance = $params->get('distance');
@@ -46,15 +46,14 @@ if ($display){
 	$style .= "ul.modulelist li{display: inline; }";
 }
 
-$buttonType = $params->get('buttonType', 'nothing');
+$buttonType = $params->get('buttonType','txt');
 $extra = '';
 switch ($side){
 	case 'top';
 		$style .= $jpanel_ID ."{top:". ($setHeight + 1)* -1 ."px; left:". $distance .";}\n";	
 		$style .= $jpanel_ID ." .jpanelHandle{border-radius:0 0 5px 5px;}\n";
 		$buttonText = '<p>'. $params->get('buttonText') .'</p>';
-		$nothing = '<p>&nbsp;&nbsp;&nbsp;</p>';
-		if($buttonType == 'text'){
+		if($buttonType == 'txt'){
 			$extra .= 'jQuery("'. $jpanel_ID .' .jpanelHandle").css("width", jQuery("'. $jpanel_ID .' .jpanelHandle p").textWidth() + "px");';
 		}
 	break;
@@ -63,8 +62,7 @@ switch ($side){
 		$style .= $jpanel_ID ."{bottom:". ($setHeight + 1)* -1 ."px; left:". $distance .";}\n";	
 		$style .= $jpanel_ID ." .jpanelHandle{border-radius:5px 5px 0 0;}\n";
 		$buttonText = '<p>'. $params->get('buttonText').'</p>';
-		$nothing = '<p>&nbsp;&nbsp;&nbsp;</p>';
-		if($buttonType == 'text'){
+		if($buttonType == 'txt'){
 			$extra .= 'jQuery("'. $jpanel_ID .' .jpanelHandle").css("width", jQuery("'. $jpanel_ID .' .jpanelHandle p").textWidth() + "px");';
 		}
 	break;
@@ -75,7 +73,6 @@ switch ($side){
 		$style .= $jpanel_ID ." .jpanelHandle{border-radius:0 5px 5px 0;}\n";	
 		$style .= $jpanel_ID ." .jpanelHandle, ". $jpanel_ID ." .jpanelContent{float:left;}\n";
 		$buttonText = '<p>'. $helper->verticaltext($params->get('buttonText')) .'</p>';
-		$nothing = '<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>';
 	break;
 		
 	case 'right';
@@ -84,7 +81,6 @@ switch ($side){
 		$style .= $jpanel_ID ." .jpanelHandle{border-radius:5px 0 0 5px;}\n";	
 		$style .= $jpanel_ID ." .jpanelHandle, ". $jpanel_ID ." .jpanelContent{float:right;}\n";
 		$buttonText = '<p>'. $helper->verticaltext($params->get('buttonText')) .'</p>';
-		$nothing = '<p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>';
 	break;	
 }
 
@@ -100,10 +96,13 @@ switch ($buttonType){
 	break;
 	
 	case 'nothing':
-		$button = $nothing;
+		$button = '';
+	break;
+		
+	case 'txt':
+		$button = $buttonText;
 	break;
 	
-	case 'txt':
 	default:
 		$button = $buttonText;
 	break;
